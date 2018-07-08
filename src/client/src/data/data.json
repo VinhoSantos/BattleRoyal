@@ -1,0 +1,7 @@
+{ 
+    "level": {
+        "number": 1,
+        "name": "trainingslevel",
+        "difficulty": "easy"
+    }
+}
