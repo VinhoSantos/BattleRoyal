@@ -1,8 +1,9 @@
-import Game from './game';
 import { Global } from './helper';
 
 export default class Render {
     
+    private static instance: Render;
+
     private canvas: HTMLCanvasElement;
     private ctx: CanvasRenderingContext2D;
 
@@ -16,11 +17,19 @@ export default class Render {
     /**
      * This class is used to draw the world on the canvas
      */
-    constructor() {
-        this.canvas = <HTMLCanvasElement>document.getElementById('canvas');
-        this.canvas.width = Global.GRIDSIZE;
-        this.canvas.height = Global.GRIDSIZE;
-        this.ctx = this.canvas.getContext('2d') as CanvasRenderingContext2D;
+    constructor() { }
+
+    static getInstance() {
+        if (!Render.instance) {
+            Render.instance = new Render();
+            
+            // ... any one time initialization goes here ...
+            Render.instance.canvas = <HTMLCanvasElement>document.getElementById('canvas');
+            Render.instance.canvas.width = Global.GRIDSIZE;
+            Render.instance.canvas.height = Global.GRIDSIZE;
+            Render.instance.ctx = Render.instance.canvas.getContext('2d') as CanvasRenderingContext2D;
+        }
+        return Render.instance;
     }
 
     public drawLevel(playerX: number, playerY: number, vision: number) {
@@ -72,8 +81,6 @@ export default class Render {
         this.ctx.arc(x, y, r, 0, 2 * Math.PI);
         this.ctx.fillStyle = this.playerColor;
         this.ctx.fill();
-
-        //console.log('player drawn on canvas @ [' + x + ',' + y + ']');
     }
 
     public clearGrid() {

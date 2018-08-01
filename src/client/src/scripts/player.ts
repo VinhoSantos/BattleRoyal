@@ -1,5 +1,6 @@
 import Render from './render';
 import { GameHelper } from './helper';
+import * as signalR from '@aspnet/signalr';
 
 export class Player {
 
@@ -11,8 +12,8 @@ export class Player {
     gotoCoY: number;
     vision = 2;
     speed = 1;
-    private readonly render: Render;
-    private isMoving = false;
+    private render: Render;
+    isMoving = false;
     private startTime = -1;
     private animationLength = 200;
 
@@ -23,11 +24,14 @@ export class Player {
         this.coY = coY;
         this.posX =  GameHelper.GetCell(coX);
         this.posY = GameHelper.GetCell(coY);
-        this.render = new Render();
-        
-        window.addEventListener("keydown", event => this.keydown(event));
-        
-        console.log('player init');
+        this.render = Render.getInstance();
+                
+        console.log('player init');       
+    }
+
+    public init() {
+        this.draw();
+        this.drawVision();
     }
 
     public moveUp() {
@@ -44,29 +48,6 @@ export class Player {
 
     public moveRight() {
         this.move(MoveDirection.Right);
-    }
-
-    private keydown(event: KeyboardEvent) {
-        if (event.defaultPrevented || this.isMoving) {
-            return; // Should do nothing if the default action has been cancelled
-        }
-
-        this.isMoving = true;
-
-        switch (event.code) {
-            case 'ArrowUp':
-                this.moveUp();
-                break;
-            case 'ArrowDown':
-                this.moveDown();
-                break;
-            case 'ArrowLeft':
-                this.moveLeft();
-                break;
-            case 'ArrowRight':
-                this.moveRight();
-                break;
-        }
     }
 
     private move(moveDirection: MoveDirection) {
@@ -137,6 +118,14 @@ export class Player {
         
         this.render.redrawLevel(this.posX, this.posY, this.vision);
         this.render.drawPlayerAt(this.coX, this.coY);
+        this.render.drawPlayerVision(this.posX, this.posY, this.vision);
+    }
+
+    public draw() {
+        this.render.drawPlayerAt(this.coX, this.coY);
+    }
+
+    public drawVision() {
         this.render.drawPlayerVision(this.posX, this.posY, this.vision);
     }
 }
