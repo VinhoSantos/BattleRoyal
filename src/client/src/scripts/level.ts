@@ -22,7 +22,7 @@ export class Level {
     }
 
     public start() {
-        this.draw();        
+        this.redraw();        
         console.log(`Level ${this.id}: ${this.name} STARTED`);
     }
 

@@ -1,10 +1,8 @@
-﻿using System;
-
-namespace Server.Model
+﻿namespace Server.Model
 {
     public class Player
     {
-        public Guid Id { get; set; }
+        public string Id { get; set; }
         public string Name { get; set; }
         public int CoX { get; set; }
         public int CoY { get; set; }

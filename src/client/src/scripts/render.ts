@@ -9,6 +9,7 @@ export default class Render {
 
     private playerColor = '#0a0';
     private gridlinesColor = '#ccc';
+    private textColor = '#333';
     private roomColor = '#333';
     private wallColor = '#888';
     private endGoalColor = '#f00';
@@ -105,6 +106,10 @@ export default class Render {
         this.drawLevel(playerX, playerY, vision);
     }
 
+    public drawLoadingScreen() {
+        this.drawText('Connecting to server ...');
+    }
+
     public drawGrid() {
         this.ctx.beginPath();
 
@@ -121,6 +126,16 @@ export default class Render {
         }
 
         this.ctx.stroke();
+    }
+
+    public drawText(text: string) {
+        const x = Global.GRIDSIZE / 2;
+        const y = Global.GRIDSIZE / 2;
+
+        this.ctx.font = '30pt Calibri';
+        this.ctx.textAlign = 'center';
+        this.ctx.fillStyle = this.textColor;
+        this.ctx.fillText(text, x, y);
     }
 
     public drawRoomAt(startX: number, startY: number, width: number, height: number) {
