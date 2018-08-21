@@ -7,6 +7,6 @@
         public int CoX { get; set; }
         public int CoY { get; set; }
         public int Speed { get; set; }
-        public int Vision { get; set; }
+        public int? Vision { get; set; }
     }
 }

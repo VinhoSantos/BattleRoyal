@@ -16,7 +16,31 @@
         [ 15, 14 ],
         [ 15, 15 ]
       ],
-      "player": [ 5, 5 ],
+      "player": {
+        "id": 1,
+        "name": "Player 1",
+        "coX": 5,
+        "coY": 5,
+        "speed": 1,
+        "vision": 2
+      },
+      "otherPlayers": [
+        {
+          "id": 2,
+          "name": "Player 2",
+          "coX": 5,
+          "coY": 5,
+          "speed": 1,
+          "vision": 2
+        },
+        {
+          "id": 3,
+          "name": "Player 3",
+          "coX": 10,
+          "coY": 10,
+          "speed": 1
+        }
+      ],
       "endPoint": [ 16, 13 ]
     }
   }

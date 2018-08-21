@@ -25,7 +25,7 @@ namespace Server.Hubs
                 Id = Context.ConnectionId
             });
 
-            Thread.Sleep(3000);
+            Thread.Sleep(1000);
 
             return base.OnConnectedAsync();
         }
@@ -43,8 +43,8 @@ namespace Server.Hubs
 
         public async Task OnStartLevel(int level = 1)
         {
-
-            await Clients.Caller.SendAsync("");
+            var connectionId = Context.ConnectionId;
+            await Clients.Caller.SendAsync("LevelStarted", level, connectionId);
         }
 
         public async Task OnPlayerInput(string name)

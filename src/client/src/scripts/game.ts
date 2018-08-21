@@ -17,23 +17,21 @@ export default class Game {
         this.render = Render.getInstance();
     }
 
-    public start() {
-        
+    public start() {        
         this.drawLoadingScreen();
-        this.setupConnection();               
+        this.setupConnection();              
     }
 
     private setupConnection() {
-
         this.connection = new signalR.HubConnectionBuilder()
             .withUrl(`${this.server}/hubs/client`)
             .build();
 
-        this.connectToServer();        
+        this.connectToServer();
+        this.setupClientMethods();
     }
 
-    private connectToServer(): void {
-        
+    private connectToServer(): void {        
         this.connection.start()
             .then(() => {
                 console.log('connected to hub');
@@ -47,10 +45,10 @@ export default class Game {
             .then(() => {
                 console.log('Speler 1 geconnecteerd');
 
-                this.startLevel();                
+                this.startLevel();
                 
-                window.addEventListener("keydown", event => this.keydown(event));
-                window.addEventListener("beforeunload", event => this.disconnectFromServer());
+                window.addEventListener('keydown', event => this.keydown(event));
+                window.addEventListener('beforeunload', () => this.disconnectFromServer());
             })
             .catch((err: any) => console.error(err.toString()));
     }
@@ -60,16 +58,18 @@ export default class Game {
     }
 
     private startLevel(): void {
-        this.connection.invoke("OnStartLevel").catch(err => console.error(err.toString()))
-        this.level = new Level(1, "Trainingslevel", Difficulty.Easy);
-        this.player = new Player(12, 10);
+        this.connection.invoke('OnStartLevel', 1)
+            .then(() => {
+                this.level = new Level(1, 'Trainingslevel', Difficulty.Easy);
+                this.player = new Player(12, 10);
 
-        this.level.start();
-        this.player.init();
+                this.level.start();
+                this.player.init();
+            })                
+            .catch(err => console.error(err.toString()))        
     }
 
-    private disconnectFromServer(): void {
-        
+    private disconnectFromServer(): void {        
         this.connection.stop()
             .then(() => console.log('disconnected from hub'))
             .catch((err: any) => console.error(err.toString()));
@@ -96,5 +96,11 @@ export default class Game {
                 this.player.moveRight();
                 break;
         }
+    }
+
+    private setupClientMethods(): void {
+        this.connection.on('LevelStarted', (level: number) => {
+            console.log('called from hub: level ' + level);
+        });
     }
 }
