@@ -29,9 +29,9 @@ export class Level {
     public draw() {
         this.render.drawGrid();
         //this.render.drawRoomAt(7, 5, 10, 15);
-        this.render.drawWallAt(15, 11, 15, 17);
-        this.render.drawWallAt(9, 13, 13, 13);
-        this.render.drawEndGoalAt(16, 16);
+        //this.render.drawWallAt(15, 11, 15, 17);
+        //this.render.drawWallAt(9, 13, 13, 13);
+        //this.render.drawEndGoalAt(16, 16);
     }
 
     public redraw() {

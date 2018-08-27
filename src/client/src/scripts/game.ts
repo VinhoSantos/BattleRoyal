@@ -35,20 +35,6 @@ export default class Game {
         this.connection.start()
             .then(() => {
                 console.log('connected to hub');
-                this.connectPlayer();
-            })
-            .catch((err: any) => console.error(err.toString()));
-    }
-
-    private connectPlayer(): void {
-        this.connection.invoke('Connect', 'Speler 1')
-            .then(() => {
-                console.log('Speler 1 geconnecteerd');
-
-                this.startLevel();
-                
-                window.addEventListener('keydown', event => this.keydown(event));
-                window.addEventListener('beforeunload', () => this.disconnectFromServer());
             })
             .catch((err: any) => console.error(err.toString()));
     }
@@ -99,8 +85,22 @@ export default class Game {
     }
 
     private setupClientMethods(): void {
-        this.connection.on('LevelStarted', (level: number) => {
-            console.log('called from hub: level ' + level);
+        this.connection.on('ClientConnected', (name: string) => {
+            console.log('called from hub: ' + name + ' connected');
+
+            this.startLevel();
+                
+            window.addEventListener('keydown', event => this.keydown(event));
+            window.addEventListener('beforeunload', () => this.disconnectFromServer());
         });
+
+        this.connection.on('LevelStarted', (level: number) => {
+            console.log('called from hub: level ' + level + ' started');
+        });
+
+        this.connection.on('NextStep', (world: WorldDto) => {
+            
+            //console.log();
+        })
     }
 }

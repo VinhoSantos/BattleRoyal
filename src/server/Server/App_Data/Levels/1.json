@@ -3,6 +3,7 @@
     "id": 1,
     "name": "Trainingslevel",
     "difficulty": "Easy",
+    "maxPlayers": 5, 
     "world": {
       "walls": [
         [ 9, 13 ],
@@ -15,31 +16,6 @@
         [ 15, 13 ],
         [ 15, 14 ],
         [ 15, 15 ]
-      ],
-      "player": {
-        "id": 1,
-        "name": "Player 1",
-        "coX": 5,
-        "coY": 5,
-        "speed": 1,
-        "vision": 2
-      },
-      "otherPlayers": [
-        {
-          "id": 2,
-          "name": "Player 2",
-          "coX": 5,
-          "coY": 5,
-          "speed": 1,
-          "vision": 2
-        },
-        {
-          "id": 3,
-          "name": "Player 3",
-          "coX": 10,
-          "coY": 10,
-          "speed": 1
-        }
       ],
       "endPoint": [ 16, 13 ]
     }
